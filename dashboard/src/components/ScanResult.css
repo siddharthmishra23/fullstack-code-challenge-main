@@ -18,3 +18,19 @@
   color: #0b19d8c1;
   text-align: center;
 }
+
+.table-container .ui.table tr:hover {
+  background-color: #e0f7fa;
+  cursor: pointer;
+}
+
+.selected-row {
+  background-color: #190eee96;
+}
+
+.selected-row:hover {
+  background-color: #190eee96;
+}
+.table-container .ui.table tr {
+  transition: background-color 0.1s ease-in;
+}
