@@ -14,8 +14,8 @@ form h2 {
 fieldset {
   margin-bottom: 1rem;
 }
-.form-repo.no-margin {
-  margin-bottom: 0;
+.form-repo.margin {
+  margin-bottom: 1rem;
   width: 100%;
 }
 
@@ -28,7 +28,8 @@ fieldset {
   font-weight: bold;
 }
 
-.form-repo input {
+.form-repo input,
+.form-repo select {
   display: block;
   width: 100%;
   max-width: 40rem;
@@ -39,9 +40,11 @@ fieldset {
   background-color: #869999;
   color: #142020;
 }
+
 .repo-row {
   display: flex;
   justify-content: flex-start;
+  gap: 3rem;
 }
 .repo-button {
   display: flex;

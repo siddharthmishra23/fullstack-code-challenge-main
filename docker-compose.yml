@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./api
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    environment:
+      MONGO_URI: mongodb://mongo:27017/mydatabase
+    depends_on:
+      - mongo
+
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "3000:5000"
+    volumes:
+      - ./dashboard:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
