@@ -7,7 +7,7 @@ import "./Details.css";
 
 function Details() {
   // pass caching key
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["details"],
     queryFn: fetchFindings,
     staleTime: 1000,

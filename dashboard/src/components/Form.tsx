@@ -3,11 +3,13 @@ import "./Form.css";
 import { useMutation } from "@tanstack/react-query";
 import { postScanResult } from "../Queries/fetchRepo";
 import { queryClient } from "../Queries/fetchRepo";
+
 function Form() {
   const [status, setStatus] = useState("Queued");
   const [repositoryName, setRepositoryName] = useState("");
   const [finding, setFinding] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
   const { mutate, isError, isPending } = useMutation({
     mutationFn: postScanResult,
     onSuccess: () => {
@@ -23,6 +25,7 @@ function Form() {
       );
     },
   });
+
   function handleSubmit(event) {
     event.preventDefault();
     let findingsJson;
@@ -40,6 +43,19 @@ function Form() {
       findings: findingsJson,
     };
     mutate(formData);
+  }
+
+  function isValidForm() {
+    if (!repositoryName.trim() || !status.trim()) {
+      return false;
+    }
+
+    try {
+      JSON.parse(finding);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   return (
@@ -71,7 +87,7 @@ function Form() {
         </div>
       </div>
       <div className="form-repo margin">
-        <label htmlFor="repo">Findings</label>
+        <label htmlFor="finding">Findings</label>
         <input
           id="finding"
           type="text"
@@ -81,10 +97,12 @@ function Form() {
         />
       </div>
       {isPending ? (
-        "Submiting your data..."
+        "Submitting your data..."
       ) : (
         <div className="repo-button">
-          <button className="button">Submit your result</button>
+          <button className="button" disabled={!isValidForm()}>
+            Submit your result
+          </button>
         </div>
       )}
       {errorMsg && <div className="error-msg">{errorMsg}</div>}
