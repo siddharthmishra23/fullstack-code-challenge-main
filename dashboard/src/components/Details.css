@@ -1,0 +1,7 @@
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 90vw;
+  margin: 0 auto;
+}

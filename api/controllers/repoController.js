@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import { RepoSchema } from "../models/repoModel.js";
+
 const Repository = mongoose.model("Repository", RepoSchema);
 
 export const addNewScanResult = (req, res) => {
-  console.log("Received body:", req.body);
-  const data = req.body;
-  if (typeof data.finding === "string") {
+  console.log("Initial request body:", JSON.stringify(req.body, null, 2));
+
+  let findings = req.body.findings;
+  if (typeof findings === "string") {
     try {
-      data.finding = JSON.parse(data.finding);
+      findings = JSON.parse(findings);
     } catch (e) {
       return res
         .status(400)
@@ -15,9 +17,20 @@ export const addNewScanResult = (req, res) => {
     }
   }
 
-  let scanResult = new Repository(data);
-  console.log("Created Mongoose model instance:", scanResult);
+  const data = {
+    repositoryName: req.body.repositoryName,
+    status: req.body.status,
+    findings: Array.isArray(req.body.findings.findings)
+      ? req.body.findings.findings
+      : [],
+    queuedAt: req.body.queuedAt || new Date(),
+    scanningAt: req.body.scanningAt || new Date(),
+    finishedAt: req.body.finishedAt || new Date(),
+  };
 
+  console.log("Prepared data for saving:", JSON.stringify(data, null, 2));
+
+  let scanResult = new Repository(data);
   scanResult
     .save()
     .then((scan) => {

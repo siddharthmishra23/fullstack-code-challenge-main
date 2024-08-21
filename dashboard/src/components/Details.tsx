@@ -1,18 +1,32 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import fetchRepo from "../Queries/fetchRepo";
+import { fetchFindings } from "../Queries/fetchRepo";
+import ScanResult from "./ScanResult";
+import Findings from "./Findings";
+import "./Details.css";
+
 function Details() {
   // pass caching key
-  const results = useQuery(["details", id], fetchRepo);
-  if (results.isLoading) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["details"],
+    queryFn: fetchFindings,
+    staleTime: 1000,
+  });
+
+  if (isLoading) {
     return (
       <div>
         <h2>loading...</h2>
       </div>
     );
   }
-  const repo = results.data;
-  return <div>Details</div>;
+
+  return (
+    <div className="details">
+      <ScanResult content={data} />
+      <Findings content={data} />
+    </div>
+  );
 }
 
 export default Details;

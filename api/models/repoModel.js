@@ -57,9 +57,11 @@ export const RepoSchema = new Schema(
     },
     scanningAt: {
       type: Date,
+      default: Date.now,
     },
     finishedAt: {
       type: Date,
+      default: Date.now,
     },
   },
   {

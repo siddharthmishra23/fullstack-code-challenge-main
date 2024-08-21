@@ -1,25 +1,50 @@
 import React, { useState } from "react";
 import "./Form.css";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { postScanResult } from "../Queries/fetchRepo";
+import { queryClient } from "../Queries/fetchRepo";
 function Form() {
   const [status, setStatus] = useState("Queued");
   const [repositoryName, setRepositoryName] = useState("");
   const [finding, setFinding] = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("");
+  const { mutate, isError, isPending } = useMutation({
+    mutationFn: postScanResult,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["details"] });
+      setStatus("Queued");
+      setRepositoryName("");
+      setFinding("");
+      setErrorMsg("");
+    },
+    onError: (error) => {
+      setErrorMsg(
+        error.response.data.message || "An unexpected error occurred."
+      );
+    },
+  });
   function handleSubmit(event) {
     event.preventDefault();
+    let findingsJson;
+
+    try {
+      findingsJson = JSON.parse(finding);
+    } catch (e) {
+      setErrorMsg("Invalid JSON in findings. Please correct it and try again.");
+      return;
+    }
+
     const formData = {
       repositoryName,
       status,
-      finding,
+      findings: findingsJson,
     };
-    postScanResult(formData);
+    mutate(formData);
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Scan your Repository</h2>
+      <h1>Scan your Repository</h1>
       <div className="repo-row">
         <div className="form-repo margin">
           <label htmlFor="repo">Repository name</label>
@@ -52,12 +77,17 @@ function Form() {
           type="text"
           value={finding}
           onChange={(e) => setFinding(e.target.value)}
-          placeholder="Enter repository name"
+          placeholder="Enter your findings in JSON"
         />
       </div>
-      <div className="repo-button">
-        <button className="button">Scan !</button>
-      </div>
+      {isPending ? (
+        "Submiting your data..."
+      ) : (
+        <div className="repo-button">
+          <button className="button">Submit your result</button>
+        </div>
+      )}
+      {errorMsg && <div className="error-msg">{errorMsg}</div>}
     </form>
   );
 }
