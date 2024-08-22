@@ -62,7 +62,8 @@ fieldset {
   cursor: pointer;
 }
 
-.button:hover,
-.button:focus {
-  background-color: #0d9aeb;
+.button:disabled {
+  background-color: #d8dee9de;
+  color: #417feaa6;
+  cursor: not-allowed;
 }

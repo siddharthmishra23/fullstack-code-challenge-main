@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Table, Label, Icon } from "semantic-ui-react";
+import { Item, ScanResultProps } from "../types/types"; // Ensure this path is correct
 import "./ScanResult.css";
 
-function ScanResult({ content, onSelect }) {
-  const [selectedRowIndex, setSelectedRowIndex] = useState(null);
+const ScanResult: React.FC<ScanResultProps> = ({ content, onSelect }) => {
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
   if (!content || content.length === 0) {
     return <div>No scan results found.</div>;
   }
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     return date.toLocaleString();
   };
 
-  const handleRowClick = (item, index: number) => {
+  const handleRowClick = (item: Item, index: number) => {
     setSelectedRowIndex(index);
     onSelect(item.findingsCount);
   };
@@ -54,6 +55,6 @@ function ScanResult({ content, onSelect }) {
       </Table>
     </div>
   );
-}
+};
 
 export default ScanResult;

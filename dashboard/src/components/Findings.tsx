@@ -1,7 +1,8 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
+import { FindingsProps } from "../types/findingtypes";
 
-function Findings({ findings }) {
+const Findings: React.FC<FindingsProps> = ({ findings }) => {
   if (!findings || findings.length === 0) {
     return <div>No findings to display.</div>;
   }
@@ -32,6 +33,6 @@ function Findings({ findings }) {
       </Table>
     </div>
   );
-}
+};
 
 export default Findings;
