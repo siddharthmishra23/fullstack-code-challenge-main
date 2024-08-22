@@ -10,8 +10,8 @@ const app = express();
 app.use(cors());
 
 // Setup body parser middleware to parse JSON bodies before routes
-app.use(bodyParser.json()); // Parse application/json
-app.use(bodyParser.urlencoded({ extended: true })); // Parse application/x-www-form-urlencoded
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB connection setup
 const PORT = 3002;

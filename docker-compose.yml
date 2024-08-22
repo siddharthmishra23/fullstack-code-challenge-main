@@ -5,9 +5,6 @@ services:
     build: ./api
     ports:
       - "3002:3002"
-    volumes:
-      - ./api:/app
-
     environment:
       MONGO_URI: mongodb://mongo:27017/mydatabase
     depends_on:
@@ -17,11 +14,9 @@ services:
     build: ./dashboard
     ports:
       - "3000:3000" # Map container port 3000 to host port 3000
-    volumes:
-      - ./dashboard:/app
 
   mongo:
-    image: mongo
+    image: mongo:latest
     ports:
       - "27017:27017"
     environment:
