@@ -71,5 +71,7 @@ need any extraneous CSS and/or animations.
 - CI configuration / Deployment
 
 To run the application:
+
   1- run docker compose up
+  
   2- your application will be hosted loscally on http://localhost:3000/
