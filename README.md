@@ -70,7 +70,7 @@ __Things you don’t have to worry about:__
 need any extraneous CSS and/or animations. 
 - CI configuration / Deployment
 
-To run the application:
+## To run the application:
 
   1- run docker compose up
   
