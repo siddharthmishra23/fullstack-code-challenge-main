@@ -69,3 +69,7 @@ __Things you don’t have to worry about:__
 - Making it super pretty: The UI should be clean and properly aligned however it does not
 need any extraneous CSS and/or animations. 
 - CI configuration / Deployment
+
+To run the application:
+  1- run docker compose up
+  2- your application will be hosted loscally on http://localhost:3000/
