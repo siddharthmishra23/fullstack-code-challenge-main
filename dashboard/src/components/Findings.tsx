@@ -4,7 +4,17 @@ import { FindingsProps } from "../types/findingtypes";
 
 const Findings: React.FC<FindingsProps> = ({ findings }) => {
   if (!findings || findings.length === 0) {
-    return <div>No findings to display.</div>;
+    return (
+      <div
+        style={{
+          color: "#0b19d8c1",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        No findings to display.
+      </div>
+    );
   }
 
   return (

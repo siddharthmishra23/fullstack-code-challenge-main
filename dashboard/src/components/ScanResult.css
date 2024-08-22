@@ -1,5 +1,5 @@
 .table-container {
-  max-height: 46vh;
+  max-height: 40vh;
   overflow-y: auto;
   overflow-x: auto;
   scrollbar-color: rgba(3, 3, 238, 0.325) #0575ed34;
